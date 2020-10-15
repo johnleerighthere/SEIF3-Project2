@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsanca_IXvSsr1d1Im_dFoWJkARmZLCw&libraries=places"></script>
+
+
+
+    <style>
+        .pac-container {
+            z-index: 10000 !important;
+        }
+
+        ​
+    </style>
+    <title><%= pageTitle %></title>
+
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <ul class="nav mt-5 mb-5">
+            <li class="nav-item mr-auto">
+                <a class="nav-link active" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sign Out</a>
+            </li>
+        </ul>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Add New
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/users/upload" enctype="multipart/form-data">
+                            <label>Image</label>
+                            <input class="form-control" type="file" name="image"></input><br>
+                            <label>Number Bought</label>
+                            <input class="form-control" type="text" name="numberBought"></input><br>
+                            <label>Prize Won</label>
+                            <input class="form-control" type="text" value="" name="prizeWon" id="prizeWon"><br>
+                            <label>Amount Paid For Ticket</label>
+                            <input class="form-control" type="text" value="" name="amountPaid"
+                                id="amountPaid"></input><br>
+                            <label>Location</label>
+                            <input class="form-control" type="text" name="location" id="location"></input>
+                            <label>Total Amount Won</label>
+                            <input class="form-control" type="text" name="totalAmount" id="totalAmount"
+                                disabled></input><br>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Number Bought</th>
+                    <th scope="col">Prize Won</th>
+                    <th scope="col">Amount Paid For Ticket</th>
+                    <th scope="col">Total Amount Won</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <form method="POST" action="#">
+                        <td><input class="form-control" file="image" name="image"></input></td>
+                        <td><input class="form-control" id="numberBought" name="numberBought"></input>
+                        </td>
+                        <td><input class="form-control" file="image" name="image"></input></td>
+                        <td><input class="form-control" file="image" name="image"></input></td>
+                        <td><input class="form-control" file="image" name="image"></input></td>
+                        <td><input class="form-control" file="image" name="image"></input></td>
+                        <td class="space-evenly">
+                            <a href="#" class="btn btn-warning btn-sm"><span class="fas fa-edit"></span></a>
+                            <button type="submit" class="btn btn-danger btn-sm"><span
+                                    class="fas fa-trash"></span></button>
+                    </form>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="/js/app.js"></script>
+
+    <script>
+
+
+
+
+
+    </script>
+</body>
+
+</html>

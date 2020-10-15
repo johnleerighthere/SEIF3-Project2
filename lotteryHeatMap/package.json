@@ -1,0 +1,20 @@
+{
+  "name": "lotteryheatmap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "john",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^1.23.0",
+    "connect-multiparty": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "node-geocoder": "^3.27.0"
+  }
+}
