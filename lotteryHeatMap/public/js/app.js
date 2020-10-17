@@ -55,3 +55,33 @@ function initialize() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+
+function editdata(...data) {
+
+    $("#exampleModal").modal('show');
+    const imagele = document.getElementById("editImage")
+    imagele.setAttribute("src", data[1]);
+    imagele.style.display = "block";
+    document.getElementById("image").value = "";
+    document.getElementById("hiddenid").value = data[0];
+    document.getElementById("numberBought").value = data[2];
+    document.getElementById("prizeWon").value = data[3];
+    document.getElementById("amountPaid").value = data[4];
+    document.getElementById("totalAmount").value = data[3] * data[4];
+    document.getElementById("location").value = data[6];
+    document.getElementById("uploadForm").setAttribute("action", "/users/editUpload");
+    console.log(data);
+
+    /// we have to change the the form url as welll
+
+}
+//
+function changeImage(event) {
+
+    console.log(event.target.files[0]);
+    const imagele = document.getElementById("editImage")
+    //URL.createObjectURL creates url from fileobject
+    imagele.setAttribute("src", URL.createObjectURL(event.target.files[0]));
+    imagele.style.display = "block";
+}

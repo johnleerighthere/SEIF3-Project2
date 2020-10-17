@@ -24,13 +24,26 @@ app.use(express.urlencoded({
 
 app.get('/', numbersControllers.showMap)
 
-app.get('/users/register', userControllers.showRegistrationForm)
+app.get('/user/signup', userControllers.showSignUpForm)
 
-app.get('/users/login', userControllers.showLoginPage)
+app.post('/user/signup', userControllers.signUp)
+
+app.get('/user/login', userControllers.showLoginPage)
+
+app.get('/user/login', userControllers.login)
 
 app.get('/users/upload', userControllers.showUploadTable)
 
+
+
 app.post('/users/upload', multipartMiddleware, userControllers.uploadData)
+
+//app.post('/users/upload', userControllers.createUploads)
+app.post('/users/editUpload', multipartMiddleware, userControllers.editUploads)
+
+app.post('/users/delete', userControllers.deleteUploads)
+
+
 
 app.listen(port, (req, res) => {
     console.log(`lotteryHeatMap app listening on port ${port}`)

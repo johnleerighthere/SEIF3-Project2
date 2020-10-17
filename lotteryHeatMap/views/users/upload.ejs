@@ -60,21 +60,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="/users/upload" enctype="multipart/form-data">
+                        <form method="POST" action="/users/upload" enctype="multipart/form-data" id="uploadForm">
                             <label>Image</label>
-                            <input class="form-control" type="file" name="image"></input><br>
+                            <img src="#" id="editImage" style="display: none; margin-bottom: 8px; margin-left: 10px;"
+                                width="100px" height="80px">
+                            <input class="form-control" type="file" onchange="changeImage(event)" name="image"
+                                id="image"></input><br>
                             <label>Number Bought</label>
-                            <input class="form-control" type="text" name="numberBought"></input><br>
+                            <input class="form-control" type="text" name="numberBought" id="numberBought"></input><br>
                             <label>Prize Won</label>
                             <input class="form-control" type="text" value="" name="prizeWon" id="prizeWon"><br>
                             <label>Amount Paid For Ticket</label>
                             <input class="form-control" type="text" value="" name="amountPaid"
                                 id="amountPaid"></input><br>
-                            <label>Location</label>
+                            <label>Bought Location</label>
                             <input class="form-control" type="text" name="location" id="location"></input>
                             <label>Total Amount Won</label>
                             <input class="form-control" type="text" name="totalAmount" id="totalAmount"
-                                disabled></input><br>
+                                readonly></input><br>
+                            <input type="hidden" name="id" id="hiddenid">
 
 
 
@@ -95,27 +99,38 @@
                     <th scope="col">Prize Won</th>
                     <th scope="col">Amount Paid For Ticket</th>
                     <th scope="col">Total Amount Won</th>
-                    <th scope="col">Location</th>
+                    <th scope="col">Bought Location</th>
                     <th scope="col">Edit/Delete</th>
                 </tr>
             </thead>
             <tbody>
+
+
+                <%data.forEach(ele => {%>
                 <tr>
-                    <form method="POST" action="#">
-                        <td><input class="form-control" file="image" name="image"></input></td>
-                        <td><input class="form-control" id="numberBought" name="numberBought"></input>
-                        </td>
-                        <td><input class="form-control" file="image" name="image"></input></td>
-                        <td><input class="form-control" file="image" name="image"></input></td>
-                        <td><input class="form-control" file="image" name="image"></input></td>
-                        <td><input class="form-control" file="image" name="image"></input></td>
-                        <td class="space-evenly">
-                            <a href="#" class="btn btn-warning btn-sm"><span class="fas fa-edit"></span></a>
+
+                    <td><img src="<%=ele.picture %>" height="50" width="50"></td>
+                    <td><%= ele.numberBought %></td>
+                    <td><%= ele.prizeWon %></td>
+                    <td><%= ele.amountPaid %></td>
+                    <td><%= ele.totalAmount %></td>
+                    <td><%= ele.locationText %></td>
+                    <td class="space-evenly">
+
+                        <form method="POST" action="/users/delete">
+                            <button type="button" class="btn btn-warning btn-sm"
+                                onclick="editdata('<%=ele._id %>','<%=ele.picture %>','<%= ele.numberBought %>','<%=ele.prizeWon %>','<%= ele.amountPaid %>','<%= ele.totalAmount %>','<%= ele.locationText %>')"><span
+                                    class="fas fa-edit"></span></button>
+                            <input type="hidden" name="id" value="<%=ele._id %>">
                             <button type="submit" class="btn btn-danger btn-sm"><span
                                     class="fas fa-trash"></span></button>
-                    </form>
+                        </form>
+
                     </td>
                 </tr>
+                <%  });  %>
+
+
 
             </tbody>
 

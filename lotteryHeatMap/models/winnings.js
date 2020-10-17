@@ -21,7 +21,8 @@ const winningsSchema = new mongoose.Schema({
     totalAmount: {
         type: Number
     },
-    location: [String]
+    location: [String],
+    locationText: String
 
 
 })
