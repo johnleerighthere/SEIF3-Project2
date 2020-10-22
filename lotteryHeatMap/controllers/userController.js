@@ -4,19 +4,19 @@ const fs = require("fs");
 
 const uuid = require('uuid')
 const SHA256 = require("crypto-js/sha256")
-const UserModel = require('../models/users')
+const UserModel = require('../models/users');
+const winningsModel = require('../models/winnings');
 
-const userWinning = require("../models/winnings");
 console.log("env", process.env)
 cloudinary.config({
     cloud_name: "daplidbcp",
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const NodeGeocoder = require('node-geocoder');
 const userModel = require('../models/users');
-const winningsModel = require('../models/winnings');
+
 
 const options = {
     provider: 'google',
@@ -33,6 +33,12 @@ const geocoder = NodeGeocoder(options);
 const controllers = {
 
     showSignUpForm: (req, res) => {
+
+        if (req.session && req.session.user) {
+            res.redirect('/')
+            return
+        }
+
         res.render('users/signup', {
             pageTitle: "Sign up",
         })
@@ -40,14 +46,59 @@ const controllers = {
     },
 
     showLoginPage: (req, res) => {
+
+        if (req.session && req.session.user) {
+            res.redirect('/')
+            return
+        }
+
         res.render('users/login', {
             pageTitle: "Login"
         })
     },
 
     login: (req, res) => {
-        userModel.findOne()
+        userModel.findOne({
+            email: req.body.email
+        })
+            .then(result => {
+                console.log(result);
+                // check if result is empty, if it is, no user, so login fail, redirect to login page
+                if (!result) {
+                    console.log('err: no result')
+                    res.redirect('/user/login')
+                    return
+                }
+
+                // combine DB user salt with given password, and apply hash algo
+                const hash = SHA256(result.pwsalt + req.body.password).toString()
+
+                // check if password is correct by comparing hashes
+                if (hash !== result.hash) {
+                    console.log('err: hash does not match')
+                    res.redirect('/user/login')
+                    return
+                }
+
+                // login successful
+
+                //set session user
+                req.session.user = result
+
+                res.redirect('/users/upload')
+            })
+            .catch(err => {
+                console.log(err)
+                res.redirect('/user/login')
+            })
     },
+    logOut: (req, res) => {
+        req.session.user = null;
+        res.redirect('/')
+
+
+    },
+
 
     signUp: (req, res) => {
         console.log(req.body);
@@ -87,7 +138,7 @@ const controllers = {
     showUploadTable: (req, res) => {
 
         /// getting the data
-        userWinning.find({/*condition*/ }, (err, data) => {
+        winningsModel.find({ username: req.session.user.email }, (err, data) => {
             if (err) res.send("Error")
             res.render('users/upload', {
                 pageTitle: "Upload Winnings",
@@ -113,27 +164,38 @@ const controllers = {
                 if (err) return res.send(err);
                 console.log("file uploaded to Cloudinary");
                 // remove file from server
-                console.log(result.url)
+                // console.log(result.url)
                 data.picture = result.url
                 data.locationText = data.location
 
+                ///
+                // console.log(req.session);
+                data.username = req.session.user.email;
+                // console.log("Datata Username", data.username);
 
-                geocoder.geocode(data.location, function (err, latlong) {
+
+                // geocoder.geocode(data.location, function (err, latlong) {
+                //     if (err) { console.log(err); res.redirect("/users/upload"); }
+
+                //     const lat = latlong[0].latitude;
+                //     const long = latlong[0].longitude;
+                //     data.location = [lat, long];
+
+
+
+                // })
+                const winningsmodel = new winningsModel({
+                    ...data,
+                    lat: Number(data["lat"]),
+                    long: Number(data["long"]),
+                    locationObj: JSON.parse(data.addObj)
+                });
+                winningsmodel.save(function (err, _data) {
                     if (err) { console.log(err); res.redirect("/users/upload"); }
 
-                    const lat = latlong[0].latitude;
-                    const long = latlong[0].longitude;
-                    data.location = [lat, long];
-
-                    const userwinning = new userWinning(data);
-                    userwinning.save(function (err, _data) {
-                        if (err) { console.log(err); res.redirect("/users/upload"); }
-
-                        else {
-                            res.redirect("/users/upload");
-                        }
-
-                    })
+                    else {
+                        res.redirect("/users/upload");
+                    }
 
                 })
 
@@ -200,7 +262,7 @@ const controllers = {
 
                         console.log("final Data when file is uploaded", data);
 
-                        userWinning.updateOne({ _id: data.id }, {
+                        winningsModel.updateOne({ _id: data.id }, {
                             $set: {
 
                                 numberBought: data.numberBought,
@@ -231,7 +293,7 @@ const controllers = {
 
 
 
-                    //fs.unlinkSync(filename); /// deleting file name from local
+                    fs.unlinkSync(filename); /// deleting file name from local
 
 
 
@@ -240,7 +302,7 @@ const controllers = {
         else {
 
 
-            userWinning.updateOne({ _id: data.id }, {
+            winningsModel.updateOne({ _id: data.id }, {
                 $set: {
 
                     numberBought: data.numberBought,
@@ -285,6 +347,120 @@ const controllers = {
                 console.log(err)
                 res.redirect('/')
             })
+    },
+
+    searchNumber: async (req, res) => {
+
+        // winningsModel.find({ numberBought: req.body.number }, (err, data) => {
+
+        //     if (err) {
+        //         console.log(err); res.json({ message: "Something Went Wrong" });
+        //     }
+
+        //     else {
+        //         //// 
+        //         let obj = {};
+        //         data.forEach(ele => {
+        //             //taking text location of data and storing all of  them in an object
+        //             if (obj[ele.locationText]) {
+        //                 obj[ele.locationText]++
+        //             }
+
+        //             else {
+        //                 obj[ele.locationText] = 1
+        //             }
+
+        //         })
+        //         // console.log(obj);
+        //         //
+        //         const maxkey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+        //         const maxvalue = obj[maxkey]
+
+        //         res.json({ maxkey: maxkey, maxvalue: maxvalue });
+        //     }
+
+
+        // })
+        console.log("hhuu", req.body)
+        let obj = {}
+        Object.keys(req.body).map(x => {
+            obj[x] = Number(req.body[x])
+        })
+
+
+        const total = winningsModel.aggregate([
+            {
+                "$match": obj
+            },
+            {
+                "$group": {
+                    "_id": "$locationText",
+                    "count": { "$sum": 1 },
+                    "total": {
+                        "$sum": "$totalAmount"
+
+                    }
+                }
+            },
+            {
+                "$sort": {
+                    "total": -1
+                }
+            }
+        ])// sorting by total amount
+
+        const count = winningsModel.aggregate([
+            {
+                "$match": obj
+            },
+            {
+                "$group": {
+                    "_id": "$locationText",
+                    "count": { "$sum": 1 },
+                    "total": {
+                        "$sum": "$totalAmount"
+                    }
+                }
+            },
+            {
+                "$sort": {
+                    "count": -1
+                }
+            }
+        ])
+        const alldata = await Promise.all([total, count]);
+        console.log(alldata); // alldata[0] is being sorted by total in descending order 
+        // alldata[1] is being sorted by count in descending order
+
+        if (alldata[0] && alldata[0].length > 0) {
+            res.json({
+                maxTotalkey: alldata[0][0]["_id"], maxTotalvalue: alldata[0][0]["total"], dataFound: true,
+                maxCountkey: alldata[1][0]["_id"], maxCountvalue: alldata[1][0]["count"]
+
+
+            });
+        } else {
+            res.json({ maxkey: "", maxvalue: "", dataFound: false });
+        }
+
+        /**
+         * 
+         * 
+         * (err, data) => {
+            if (err) {
+                console.log(err); res.json({ message: "Something Went Wrong" });
+            }
+            console.log(data)
+            if (data && data.length > 0) {
+                res.json({ maxkey: data[0]["_id"], maxvalue: data[0]["count"], dataFound: true });
+            } else {
+                res.json({ maxkey: "", maxvalue: "", dataFound: false });
+            }
+
+        }
+         */
+
+
     }
 
 

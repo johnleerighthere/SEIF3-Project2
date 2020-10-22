@@ -9,95 +9,83 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
     <title><%= pageTitle %></title>
-
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsanca_IXvSsr1d1Im_dFoWJkARmZLCw&callback=initMap&libraries=visualization&v=weekly"
-        defer></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsanca_IXvSsr1d1Im_dFoWJkARmZLCw&libraries=visualization&callback=initMap">
+        </script>
 </head>
 
 <body>
 
     <div class="container">
+
         <ul class="nav mt-5">
-            <li class="nav-item mr-auto">
+            <li class="nav-item">
                 <a class="nav-link active" href="/">Home</a>
             </li>
-            <li class="nav-item mr-5">
+            <% if (user != null) { %>
+            <li class="nav-item">
+                <a class="nav-link active" href="/users/upload">Uploads</a>
+            </li>
+            <% } %>
+
+            <% if (user === null) { %>
+            <li class="nav-item offset-8">
                 <a class="nav-link" href="user/signup">Sign Up</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ml-auto">
                 <a class="nav-link" href="user/login">Log In</a>
             </li>
+            <%} else { %>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="/user/logout">Sign Out</a>
+            </li>
+            <% } %>
+
         </ul>
+
 
         <div class="container mb-4">
 
             <div class="d-flex flex-row mt-4">
                 <label class="col-3" for="rating">Prize Category</label>
 
-                <label class="col-3" for="4numbers">Select Numbers</label>
+                <label class="col-3" for="4numbers">Search Numbers</label>
+
+                <label class="col-3" for="occurance">Appeared most at</label>
+
+                <label class="col-3" for="paidout">Paid out most at</label>
             </div>
             <div class="form-group d-flex flex-row">
 
                 <select class="form-control col-2" id="Prize" name="prize">
-                    <option>All Prize</option>
-                    <option>1st Prize</option>
-                    <option>2nd Prize</option>
-                    <option>3rd Prize</option>
-                </select>
-                <select class="form-control col-1" id="" name="num1">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                </select>
-                <select class="form-control col-1" id="" name="num1">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                </select>
-                <select class="form-control col-1" id="" name="num1">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                </select>
-                <select class="form-control col-1" id="" name="num1">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
+                    <option value="">All Prize</option>
+                    <option value="3000">1st Prize</option>
+                    <option value="2000">2nd Prize</option>
+                    <option value="1000">3rd Prize</option>
                 </select>
 
-                <input class="btn btn-primary" type="submit" value="Submit">
+                <div class="input-group col-4">
+                    <input id="queryNum" type="text" class="form-control" placeholder="0000 to 9999"
+                        aria-label="Text input with segmented dropdown button">
+                    <div class="input-group-append">
+                        <button onclick="queryNum()" type="button" class="btn btn-outline-secondary">Submit</button>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Select All Numbers</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="xLocation"></div>
+                <div id="paidLocation"></div>
+
             </div>
         </div>
 
@@ -107,11 +95,9 @@
     <div id="map"></div>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>

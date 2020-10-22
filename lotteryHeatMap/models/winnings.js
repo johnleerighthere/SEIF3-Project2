@@ -21,8 +21,15 @@ const winningsSchema = new mongoose.Schema({
     totalAmount: {
         type: Number
     },
-    location: [String],
-    locationText: String
+    locationObj: { type: Object },
+    lat: { type: Number },
+    long: { type: Number },
+    locationText: String,
+    username: String,
+    // prizeCategory: {
+    //     type: String,
+    //     required: true
+    // }
 
 
 })
