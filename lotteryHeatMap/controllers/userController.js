@@ -8,6 +8,7 @@ const UserModel = require('../models/users');
 const winningsModel = require('../models/winnings');
 
 console.log("env", process.env)
+//told userControllerJS that I want to store here
 cloudinary.config({
     cloud_name: "daplidbcp",
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -157,14 +158,13 @@ const controllers = {
         console.log(req.body);// save it into the database
         let data = req.body;
 
-
+        //with the help of config, uploads my image into cloudinary cloud
         cloudinary.uploader.upload(
             filename, // directory and tags are optional
             function (err, result) {
                 if (err) return res.send(err);
                 console.log("file uploaded to Cloudinary");
-                // remove file from server
-                // console.log(result.url)
+                //uploading picture to winningsModel
                 data.picture = result.url
                 data.locationText = data.location
 
@@ -184,6 +184,8 @@ const controllers = {
 
 
                 // })
+                //creating a new ticket with lat and long and locationObj
+                //locationObj contains the whole obj regarding the place, to access Obj.url etc
                 const winningsmodel = new winningsModel({
                     ...data,
                     lat: Number(data["lat"]),
@@ -203,7 +205,7 @@ const controllers = {
 
 
 
-                fs.unlinkSync(filename); /// deleting file name from local
+                // fs.unlinkSync(filename); /// deleting file name from local
 
 
 
@@ -395,6 +397,9 @@ const controllers = {
             {
                 "$group": {
                     "_id": "$locationText",
+                    "latitude": { $first: "$lat" },
+                    "longitude": { $first: "$long" },
+
                     "count": { "$sum": 1 },
                     "total": {
                         "$sum": "$totalAmount"
@@ -429,13 +434,14 @@ const controllers = {
             }
         ])
         const alldata = await Promise.all([total, count]);
-        console.log(alldata); // alldata[0] is being sorted by total in descending order 
+        console.log(alldata[0]); // alldata[0] is being sorted by total in descending order 
         // alldata[1] is being sorted by count in descending order
 
         if (alldata[0] && alldata[0].length > 0) {
             res.json({
                 maxTotalkey: alldata[0][0]["_id"], maxTotalvalue: alldata[0][0]["total"], dataFound: true,
-                maxCountkey: alldata[1][0]["_id"], maxCountvalue: alldata[1][0]["count"]
+                maxCountkey: alldata[1][0]["_id"], maxCountvalue: alldata[1][0]["count"],
+                mapdata: alldata[0]
 
 
             });

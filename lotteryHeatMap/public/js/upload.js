@@ -22,6 +22,10 @@ function getUserLocation() {
     console.log(lng);
     document.getElementById("lat").value = lat
     document.getElementById("long").value = lng
+    //form data always works on string values, we have to send obj type to server, to convert
+    //any obj or array, we can stringify into a string
+    //basically an object or array is term as a json, json means javascript object notation
+    // to define any object variable or type, we have to express it as a json
     document.getElementById("addObj").value = JSON.stringify({
         link: place.url,
         formatted_address: place.formatted_address
@@ -45,6 +49,7 @@ function calculateTotalAmount() {
 }
 
 function editdata(...data) {
+    console.log(data)
 
     $("#exampleModal").modal('show');
     const imagele = document.getElementById("editImage")
@@ -67,7 +72,7 @@ function editdata(...data) {
 function validateForm() {
     var x = document.getElementById("prizeWon").value
 
-    if (x === isNaN() || x != Number("3000") || x != Number("2000") || x != Number("1000")) {
+    if (x === isNaN() || x != Number("3000") && x != Number("2000") && x != Number("1000")) {
         alert("Please key in either 3000, 2000 or 1000 for Prize Won");
         return false;
     }

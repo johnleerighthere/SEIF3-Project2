@@ -4,8 +4,8 @@ console.log("lotteryHeatMap app ready")
 
 let map, heatmap;
 
-function initMap() {
-    console.log("in initi amp")
+function initMap(data) {
+    console.log("init map")
     var Singapore = { lat: 1.3521, lng: 103.8198 }
     map = new google.maps.Map(document.getElementById("map"), {
         center: Singapore,
@@ -13,10 +13,10 @@ function initMap() {
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: getData(),
+        data: data || getData(),
         map: map
     });
-    heatmap.set("radius", 20);
+    heatmap.set("radius", 25);
     var input = document.getElementById('location');
     console.log(input)
     if (input) {
@@ -24,6 +24,8 @@ function initMap() {
     }
 
 }
+
+
 
 // google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -36,7 +38,7 @@ function getData() {
         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 3 },
         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
         new google.maps.LatLng(1.3524, 103.8198),
-        { location: new google.maps.LatLng(1.3519, 103.8197), weight: 0.5 },
+        { location: new google.maps.LatLng(1.3519, 103.8197), weight: 3 },
 
         { location: new google.maps.LatLng(1.3519, 103.8198), weight: 3 },
         { location: new google.maps.LatLng(1.3519, 103.8199), weight: 30 },
@@ -46,8 +48,12 @@ function getData() {
         { location: new google.maps.LatLng(37.785, -122.437), weight: 2 },
         { location: new google.maps.LatLng(37.785, -122.435), weight: 3 },
         new google.maps.LatLng(1.3644, 103.9915),
-        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 50 },
-        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 3 }
+        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
+        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
+        // new google.maps.LatLng(1.3329, 103.7436),
+        { location: new google.maps.LatLng(1.3329, 103.7436), weight: 200 },
+
+
     ];
 
 }
@@ -76,11 +82,25 @@ function queryNum() {
                     alert("Number doesn't exist in database");
                     return false;
                 }
-                document.getElementById("xLocation").innerHTML = `<span style="display:block;
-                width:150px;word-wrap: break-word;">${data.maxCountkey} for ${data.maxCountvalue} times</span>`;
-                document.getElementById("paidLocation").innerHTML = `<span style="display:block;
-                width:150px;word-wrap: break-word;">${data.maxTotalkey} for $${data.maxTotalvalue}</span>`;
+                document.getElementById("xLocation").innerHTML = `<div style="text-align:right; display:inline-block;
+                width:250px;word-wrap: break-word;">${data.maxCountkey} for ${data.maxCountvalue} times</div>`;
+                document.getElementById("paidLocation").innerHTML = `<div style="text-align:right; display:inline-block;
+                width:250px;word-wrap: break-word;">${data.maxTotalkey} for $${data.maxTotalvalue}</div>`;
                 console.log(data);
+
+
+                /// Setting up the heat map here 
+
+
+                const mapdata = data.mapdata.map(ele => {
+                    return {
+                        location: new google.maps.LatLng(ele.latitude, ele.longitude),
+                        weight: ele.total
+
+                    }
+                })
+                console.log("hey", mapdata);
+                initMap(mapdata)
             }
         })
     }
