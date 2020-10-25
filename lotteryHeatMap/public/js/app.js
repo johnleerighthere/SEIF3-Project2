@@ -39,18 +39,12 @@ function getData() {
         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
         new google.maps.LatLng(1.3524, 103.8198),
         { location: new google.maps.LatLng(1.3519, 103.8197), weight: 3 },
-
         { location: new google.maps.LatLng(1.3519, 103.8198), weight: 3 },
         { location: new google.maps.LatLng(1.3519, 103.8199), weight: 30 },
-        new google.maps.LatLng(37.785, -122.443),
-        { location: new google.maps.LatLng(37.785, -122.441), weight: 0.5 },
-        new google.maps.LatLng(37.785, -122.439),
-        { location: new google.maps.LatLng(37.785, -122.437), weight: 2 },
-        { location: new google.maps.LatLng(37.785, -122.435), weight: 3 },
         new google.maps.LatLng(1.3644, 103.9915),
         { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
         { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
-        // new google.maps.LatLng(1.3329, 103.7436),
+        new google.maps.LatLng(1.3329, 103.7436),
         { location: new google.maps.LatLng(1.3329, 103.7436), weight: 200 },
 
 

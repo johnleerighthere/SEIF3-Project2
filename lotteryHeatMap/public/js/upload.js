@@ -3,12 +3,11 @@ var autocomplete;
 function initialize() {
     console.log("121212")
     var input = document.getElementById('location');
+    //geocode interferes with getting all the places.
     autocomplete = new google.maps.places.Autocomplete(input, { types: ['geocode'] });
     console.log("autocomplete", autocomplete)
     autocomplete.addListener('place_changed', getUserLocation)
 }
-
-// google.maps.event.addDomListener(window, 'load', initialize);
 
 function getUserLocation() {
     var place = autocomplete.getPlace()

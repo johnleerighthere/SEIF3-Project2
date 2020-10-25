@@ -31,7 +31,7 @@
             <% } %>
 
             <% if (user === null) { %>
-            <li class="nav-item offset-8">
+            <li class="nav-item offset-9">
                 <a class="nav-link" href="user/signup">Sign Up</a>
             </li>
             <li class="nav-item ml-auto">
@@ -57,34 +57,44 @@
 
                 <label class="col-3" for="paidout">Paid out most at</label>
             </div>
-            <div class="form-group d-flex flex-row">
+            <div class="form-group row">
 
-                <select class="form-control col-2" id="Prize" name="prize">
-                    <option value="">All Prize</option>
-                    <option value="3000">1st Prize</option>
-                    <option value="2000">2nd Prize</option>
-                    <option value="1000">3rd Prize</option>
-                </select>
+                <div class="col-6">
+                    <div class="row">
+                        <select class="form-control col-4" id="Prize" name="prize">
+                            <option value="">All Prize</option>
+                            <option value="3000">1st Prize</option>
+                            <option value="2000">2nd Prize</option>
+                            <option value="1000">3rd Prize</option>
+                        </select>
 
-                <div class="input-group col-4">
-                    <input id="queryNum" type="text" class="form-control" placeholder="0000 to 9999"
-                        aria-label="Text input with segmented dropdown button">
-                    <div class="input-group-append">
-                        <button onclick="queryNum()" type="button" class="btn btn-outline-secondary">Submit</button>
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Select All Numbers</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+                        <div class="input-group col-8">
+                            <input id="queryNum" type="text" class="form-control" placeholder="0000 to 9999"
+                                aria-label="Text input with segmented dropdown button">
+                            <div class="input-group-append">
+                                <button onclick="queryNum()" type="button"
+                                    class="btn btn-outline-secondary">Submit</button>
+                                <button type="button"
+                                    class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Select All Numbers</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="xLocation"></div>
-                <div id="paidLocation"></div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6" id="xLocation"></div>
+                        <div class="col-6" id="paidLocation"></div>
+                    </div>
+                </div>
 
             </div>
         </div>
