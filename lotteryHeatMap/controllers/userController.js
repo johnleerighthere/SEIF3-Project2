@@ -7,7 +7,7 @@ const SHA256 = require("crypto-js/sha256")
 const UserModel = require('../models/users');
 const winningsModel = require('../models/winnings');
 
-console.log("env", process.env)
+
 //told userControllerJS that I want to store here
 cloudinary.config({
     cloud_name: "daplidbcp",
@@ -152,7 +152,13 @@ const controllers = {
 
 
     uploadData: (req, res) => {
-        console.log(req.files);
+
+        console.log("req.files", req.files);
+        // const file = req.files.image.size
+
+        // if (file = 0) {
+        //     console.log("no file")
+        // }
 
         const filename = req.files.image.path; //this path should be uploaded to cloudinary;
         console.log(req.body);// save it into the database
@@ -240,6 +246,7 @@ const controllers = {
         const data = req.body;
         const size = req.files.image.size;
         const filename = req.files.image.path;
+        console.log("Edit Data", data);
 
         if (size > 0) {
             /// You have to put the cloudinary code here as well
@@ -262,6 +269,7 @@ const controllers = {
                         const long = latlong[0].longitude;
                         data.location = [lat, long];
 
+
                         console.log("final Data when file is uploaded", data);
 
                         winningsModel.updateOne({ _id: data.id }, {
@@ -271,6 +279,7 @@ const controllers = {
                                 prizeWon: data.prizeWon,
                                 amountPaid: data.amountPaid,
                                 locationText: data.locationText,
+                                locationObj: JSON.parse(data.addObj),
                                 totalAmount: data.totalAmount,
                                 location: data.location,
                                 picture: data.picture
@@ -312,6 +321,7 @@ const controllers = {
                     amountPaid: data.amountPaid,
                     locationText: data.location,
                     totalAmount: data.totalAmount,
+                    locationObj: JSON.parse(data.addObj),
 
 
 
@@ -390,6 +400,13 @@ const controllers = {
         })
 
 
+        // some logic and you are getting a variable -> KEYNAME
+        // let obj = {
+        //     "KEYNAME": value
+        // }
+
+        // obj. or obj["value"]
+
         const total = winningsModel.aggregate([
             {
                 "$match": obj
@@ -399,7 +416,7 @@ const controllers = {
                     "_id": "$locationText",
                     "latitude": { $first: "$lat" },
                     "longitude": { $first: "$long" },
-
+                    "locationObj": { "$first": "$locationObj" },
                     "count": { "$sum": 1 },
                     "total": {
                         "$sum": "$totalAmount"
@@ -421,6 +438,9 @@ const controllers = {
             {
                 "$group": {
                     "_id": "$locationText",
+                    "latitude": { $first: "$lat" },
+                    "longitude": { $first: "$long" },
+                    "locationObj": { "$first": "$locationObj" },
                     "count": { "$sum": 1 },
                     "total": {
                         "$sum": "$totalAmount"
@@ -434,16 +454,20 @@ const controllers = {
             }
         ])
         const alldata = await Promise.all([total, count]);
-        console.log(alldata[0]); // alldata[0] is being sorted by total in descending order 
+        // console.log(alldata[0]); // alldata[0] is being sorted by total in descending order 
         // alldata[1] is being sorted by count in descending order
 
         if (alldata[0] && alldata[0].length > 0) {
+
             res.json({
-                maxTotalkey: alldata[0][0]["_id"], maxTotalvalue: alldata[0][0]["total"], dataFound: true,
-                maxCountkey: alldata[1][0]["_id"], maxCountvalue: alldata[1][0]["count"],
+                maxTotalkey: alldata[0][0]["_id"],
+                maxTotalvalue: alldata[0][0]["total"],
+                maxTotalLink: alldata[0][0]["locationObj"]["link"],
+                dataFound: true,
+                maxCountkey: alldata[1][0]["_id"],
+                maxCountvalue: alldata[1][0]["count"],
+                maxCountLink: alldata[1][0]["locationObj"]["link"],
                 mapdata: alldata[0]
-
-
             });
         } else {
             res.json({ maxkey: "", maxvalue: "", dataFound: false });

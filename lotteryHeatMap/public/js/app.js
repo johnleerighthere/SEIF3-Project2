@@ -11,9 +11,29 @@ function initMap(data) {
         center: Singapore,
         zoom: 11,
     });
+    let defautMapData = JSON.parse(document.getElementById("defaultData").innerHTML)
+    console.log(defautMapData)
+    let mapData = []
+    //if data is coming from the filter button
 
+    if (defautMapData && Array.isArray(defautMapData) && defautMapData.length > 0) {
+        mapData = defautMapData.map(ele => {
+            return {
+                location: new google.maps.LatLng(ele.lat, ele.long),
+                weight: ele.total
+
+            }
+        })
+    }
+    if (data && Array.isArray(data) && data.length > 0) {
+        mapData = data
+    } else {
+        document.getElementById("paidLocation").innerHTML = `<div style="text-align:right; display:inline-block;
+                width:250px;word-wrap: break-word;"><a target="__blank" href='${defautMapData[0].locationObj["link"]}'>${defautMapData[0]._id}</a> for $${defautMapData[0].total}</div>`;
+    }
+    console.log(mapData)
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: data || getData(),
+        data: mapData,
         map: map
     });
     heatmap.set("radius", 25);
@@ -30,27 +50,28 @@ function initMap(data) {
 // google.maps.event.addDomListener(window, 'load', initialize);
 
 
-function getData() {
-    return [
-        { location: new google.maps.LatLng(1.3521, 103.8198), weight: 30, },
-        new google.maps.LatLng(1.3521, -103.8198),
-        { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
-        { location: new google.maps.LatLng(1.3521, 103.8198), weight: 3 },
-        { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
-        new google.maps.LatLng(1.3524, 103.8198),
-        { location: new google.maps.LatLng(1.3519, 103.8197), weight: 3 },
-        { location: new google.maps.LatLng(1.3519, 103.8198), weight: 3 },
-        { location: new google.maps.LatLng(1.3519, 103.8199), weight: 30 },
-        new google.maps.LatLng(1.3644, 103.9915),
-        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
-        { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
-        new google.maps.LatLng(1.3329, 103.7436),
-        { location: new google.maps.LatLng(1.3329, 103.7436), weight: 200 },
+// function getData() {
+
+//     return [
+//         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 30, },
+//         new google.maps.LatLng(1.3521, -103.8198),
+//         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
+//         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 3 },
+//         { location: new google.maps.LatLng(1.3521, 103.8198), weight: 2 },
+//         new google.maps.LatLng(1.3524, 103.8198),
+//         { location: new google.maps.LatLng(1.3519, 103.8197), weight: 3 },
+//         { location: new google.maps.LatLng(1.3519, 103.8198), weight: 3 },
+//         { location: new google.maps.LatLng(1.3519, 103.8199), weight: 30 },
+//         new google.maps.LatLng(1.3644, 103.9915),
+//         { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
+//         { location: new google.maps.LatLng(1.3644, 103.9915), weight: 15 },
+//         new google.maps.LatLng(1.3329, 103.7436),
+//         { location: new google.maps.LatLng(1.3329, 103.7436), weight: 200 },
 
 
-    ];
+//     ];
 
-}
+// }
 
 
 function queryNum() {
@@ -77,9 +98,9 @@ function queryNum() {
                     return false;
                 }
                 document.getElementById("xLocation").innerHTML = `<div style="text-align:right; display:inline-block;
-                width:250px;word-wrap: break-word;">${data.maxCountkey} for ${data.maxCountvalue} times</div>`;
+                width:250px;word-wrap: break-word;"><a target="__blank" href='${data.maxCountLink}'>${data.maxCountkey}</a> for ${data.maxCountvalue} times</div>`;
                 document.getElementById("paidLocation").innerHTML = `<div style="text-align:right; display:inline-block;
-                width:250px;word-wrap: break-word;">${data.maxTotalkey} for $${data.maxTotalvalue}</div>`;
+                width:250px;word-wrap: break-word;"><a target="__blank" href='${data.maxTotalLink}'>${data.maxTotalkey}</a> for $${data.maxTotalvalue}</div>`;
                 console.log(data);
 
 

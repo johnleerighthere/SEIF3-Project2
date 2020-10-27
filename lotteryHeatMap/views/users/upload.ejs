@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <script defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdsanca_IXvSsr1d1Im_dFoWJkARmZLCw&libraries=places&callback=initialize"></script>
 
@@ -71,13 +72,14 @@
                             <input class="form-control" type="file" onchange="changeImage(event)" name="image"
                                 id="image"></input><br>
                             <label>Number Bought</label>
-                            <input class="form-control" type="text" name="numberBought" id="numberBought"></input><br>
+                            <input class="form-control" type="text" name="numberBought" id="numberBought"
+                                placeholder="0000 - 9999"></input><br>
                             <label>Prize Won</label>
                             <input class="form-control" type="text" value="" name="prizeWon" id="prizeWon"
                                 placeholder="3000, 2000 or 1000"><br>
                             <label>Amount Paid For Ticket</label>
-                            <input class="form-control" type="text" value="" name="amountPaid"
-                                id="amountPaid"></input><br>
+                            <input class="form-control" type="text" value="" name="amountPaid" id="amountPaid"
+                                placeholder="Try not to put more than 500"></input><br>
                             <label>Bought Location</label>
                             <input class="form-control" type="text" name="location" id="location"></input>
                             <label>Total Amount Won</label>
@@ -99,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <table class="table">
+        <table class="table table-bordered" id="example">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Picture</th>
@@ -127,7 +129,7 @@
 
                         <form method="POST" action="/users/delete">
                             <button type="button" class="btn btn-warning btn-sm"
-                                onclick="editdata('<%=ele._id %>','<%=ele.picture %>','<%= ele.numberBought %>','<%=ele.prizeWon %>','<%= ele.amountPaid %>','<%= ele.totalAmount %>','<%= ele.locationText %>')"><span
+                                onclick="editdata('<%=ele._id %>','<%=ele.picture %>','<%= ele.numberBought %>','<%=ele.prizeWon %>','<%= ele.amountPaid %>','<%= ele.totalAmount %>','<%= ele.locationText %>','<%= JSON.stringify(ele.locationObj) %>')"><span
                                     class="fas fa-edit"></span></button>
                             <input type="hidden" name="id" value="<%=ele._id %>">
                             <button type="submit" class="btn btn-danger btn-sm"><span
@@ -159,13 +161,18 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     <script src="/js/upload.js"></script>
-    /*
-    <script src="/js/app.js"></script> */
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+
+
 
 
     <script>
 
-
+        $(document).ready(function () {
+            $('#example').DataTable();
+        })
 
 
 
