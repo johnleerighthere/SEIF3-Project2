@@ -7,7 +7,9 @@ const port = 4000
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({ uploadDir: 'uploads' });
 
+//controller for index page
 const numbersControllers = require('./controllers/numbersController')
+//controller for uploads/sign in/ log in page
 const userControllers = require('./controllers/userController')
 
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`
@@ -15,10 +17,8 @@ mongoose.set('useFindAndModify', false)
 
 
 app.set('view engine', 'ejs')
-
 app.use(express.static('public'))
-
-app.use(express.json()); // 
+app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }))

@@ -221,26 +221,26 @@ const controllers = {
 
     },
 
-    createUploads: (req, res) => {
-        winningsModel.create({
-            picture: req.body.image,
-            numberBought: req.body.numberBought,
-            prizeWon: req.body.prizeWon,
-            amountPaid: req.body.amountPaid,
-            location: req.body.location,
-            totalAmount: req.body.totalAmount
+    // createUploads: (req, res) => {
+    //     winningsModel.create({
+    //         picture: req.body.image,
+    //         numberBought: req.body.numberBought,
+    //         prizeWon: req.body.prizeWon,
+    //         amountPaid: req.body.amountPaid,
+    //         location: req.body.location,
+    //         totalAmount: req.body.totalAmount
 
-                .then(result => {
-                    res.redirect('/users/uploads')
-                })
+    //             .then(result => {
+    //                 res.redirect('/users/uploads')
+    //             })
 
-                .catch(err => {
-                    console.log(err)
-                    res.redirect('/')
-                })
+    //             .catch(err => {
+    //                 console.log(err)
+    //                 res.redirect('/')
+    //             })
 
-        })
-    },
+    //     })
+    // },
 
     editUploads: (req, res) => {
         const data = req.body;
@@ -363,36 +363,6 @@ const controllers = {
 
     searchNumber: async (req, res) => {
 
-        // winningsModel.find({ numberBought: req.body.number }, (err, data) => {
-
-        //     if (err) {
-        //         console.log(err); res.json({ message: "Something Went Wrong" });
-        //     }
-
-        //     else {
-        //         //// 
-        //         let obj = {};
-        //         data.forEach(ele => {
-        //             //taking text location of data and storing all of  them in an object
-        //             if (obj[ele.locationText]) {
-        //                 obj[ele.locationText]++
-        //             }
-
-        //             else {
-        //                 obj[ele.locationText] = 1
-        //             }
-
-        //         })
-        //         // console.log(obj);
-        //         //
-        //         const maxkey = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
-        //         const maxvalue = obj[maxkey]
-
-        //         res.json({ maxkey: maxkey, maxvalue: maxvalue });
-        //     }
-
-
-        // })
         console.log("hhuu", req.body)
         let obj = {}
         Object.keys(req.body).map(x => {
@@ -472,24 +442,6 @@ const controllers = {
         } else {
             res.json({ maxkey: "", maxvalue: "", dataFound: false });
         }
-
-        /**
-         * 
-         * 
-         * (err, data) => {
-            if (err) {
-                console.log(err); res.json({ message: "Something Went Wrong" });
-            }
-            console.log(data)
-            if (data && data.length > 0) {
-                res.json({ maxkey: data[0]["_id"], maxvalue: data[0]["count"], dataFound: true });
-            } else {
-                res.json({ maxkey: "", maxvalue: "", dataFound: false });
-            }
-
-        }
-         */
-
 
     }
 

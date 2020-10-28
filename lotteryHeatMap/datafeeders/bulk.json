@@ -1,0 +1,87 @@
+[
+    {
+        "_id": "5f99375528474b4a12e3bc5f",
+        "numberBought": 4444,
+        "prizeWon": 1000,
+        "amountPaid": 23,
+        "totalAmount": 23000,
+        "lat": 1.4306034,
+        "long": 103.8272371,
+        "picture": "http://res.cloudinary.com/daplidbcp/image/upload/v1603805113/mdapoellyzhyydr46wj8.jpg",
+        "locationText": "Yishun Avenue 5, Singapore Pools @ Yishun Blk 101 (N1 Branch), Singapore",
+        "username": "johnleenextdoor@gmail.com",
+        "locationObj": {
+            "link": "https://maps.google.com/?cid=14151778455336887149",
+            "formatted_address": "101 Yishun Ave 5, Singapore 760101"
+        },
+        "_v": 0
+    },
+    {
+        "_id": "5f99375530f8abe257608a02",
+        "numberBought": 7777,
+        "prizeWon": 2000,
+        "amountPaid": 41,
+        "totalAmount": 82000,
+        "lat": 1.4306034,
+        "long": 103.8272371,
+        "picture": "http://res.cloudinary.com/daplidbcp/image/upload/v1603805113/mdapoellyzhyydr46wj8.jpg",
+        "locationText": "Yishun Avenue 5, Singapore Pools @ Yishun Blk 101 (N1 Branch), Singapore",
+        "username": "johnleenextdoor@gmail.com",
+        "locationObj": {
+            "link": "https://maps.google.com/?cid=14151778455336887149",
+            "formatted_address": "101 Yishun Ave 5, Singapore 760101"
+        },
+        "_v": 0
+    },
+    {
+        "_id": "5f99375557ba3c52466f0b03",
+        "numberBought": 6666,
+        "prizeWon": 2000,
+        "amountPaid": 48,
+        "totalAmount": 96000,
+        "lat": 1.4306034,
+        "long": 103.8272371,
+        "picture": "http://res.cloudinary.com/daplidbcp/image/upload/v1603805113/mdapoellyzhyydr46wj8.jpg",
+        "locationText": "Yishun Avenue 5, Singapore Pools @ Yishun Blk 101 (N1 Branch), Singapore",
+        "username": "johnleenextdoor@gmail.com",
+        "locationObj": {
+            "link": "https://maps.google.com/?cid=14151778455336887149",
+            "formatted_address": "101 Yishun Ave 5, Singapore 760101"
+        },
+        "_v": 0
+    },
+    {
+        "_id": "5f993755ae8cbecc1058bb0a",
+        "numberBought": 3333,
+        "prizeWon": 3000,
+        "amountPaid": 7,
+        "totalAmount": 21000,
+        "lat": 1.4306034,
+        "long": 103.8272371,
+        "picture": "http://res.cloudinary.com/daplidbcp/image/upload/v1603805113/mdapoellyzhyydr46wj8.jpg",
+        "locationText": "Yishun Avenue 5, Singapore Pools @ Yishun Blk 101 (N1 Branch), Singapore",
+        "username": "johnleenextdoor@gmail.com",
+        "locationObj": {
+            "link": "https://maps.google.com/?cid=14151778455336887149",
+            "formatted_address": "101 Yishun Ave 5, Singapore 760101"
+        },
+        "_v": 0
+    },
+    {
+        "_id": "5f993755e1e0d0511bd7faa7",
+        "numberBought": 2222,
+        "prizeWon": 2000,
+        "amountPaid": 18,
+        "totalAmount": 36000,
+        "lat": 1.4306034,
+        "long": 103.8272371,
+        "picture": "http://res.cloudinary.com/daplidbcp/image/upload/v1603805113/mdapoellyzhyydr46wj8.jpg",
+        "locationText": "Yishun Avenue 5, Singapore Pools @ Yishun Blk 101 (N1 Branch), Singapore",
+        "username": "johnleenextdoor@gmail.com",
+        "locationObj": {
+            "link": "https://maps.google.com/?cid=14151778455336887149",
+            "formatted_address": "101 Yishun Ave 5, Singapore 760101"
+        },
+        "_v": 0
+    }
+]
