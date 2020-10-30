@@ -28,8 +28,7 @@ function initMap(data) {
     if (data && Array.isArray(data) && data.length > 0) {
         mapData = data
     } else {
-        document.getElementById("paidLocation").innerHTML = `<div style="text-align:right; display:inline-block;
-                width:250px;word-wrap: break-word;"><a target="__blank" href='${defautMapData[0].locationObj["link"]}'>${defautMapData[0]._id}</a> for $${defautMapData[0].total}</div>`;
+        document.getElementById("paidLocation").innerHTML = `<div><a target="_blank" href='${defautMapData[0].locationObj["link"]}'>${defautMapData[0]._id}</a> for $${defautMapData[0].total}</div>`;
     }
     console.log(mapData)
     heatmap = new google.maps.visualization.HeatmapLayer({
@@ -68,10 +67,8 @@ function queryNum() {
                     alert("Number doesn't exist in database");
                     return false;
                 }
-                document.getElementById("xLocation").innerHTML = `<div style="text-align:right; display:inline-block;
-                width:250px;word-wrap: break-word;"><a target="__blank" href='${data.maxCountLink}'>${data.maxCountkey}</a> for ${data.maxCountvalue} times</div>`;
-                document.getElementById("paidLocation").innerHTML = `<div style="text-align:right; display:inline-block;
-                width:250px;word-wrap: break-word;"><a target="__blank" href='${data.maxTotalLink}'>${data.maxTotalkey}</a> for $${data.maxTotalvalue}</div>`;
+                document.getElementById("xLocation").innerHTML = `<div><a target="__blank" href='${data.maxCountLink}'>${data.maxCountkey}</a> for ${data.maxCountvalue} times</div>`;
+                document.getElementById("paidLocation").innerHTML = `<div><a target="__blank" href='${data.maxTotalLink}'>${data.maxTotalkey}</a> for $${data.maxTotalvalue}</div>`;
                 console.log(data);
 
 

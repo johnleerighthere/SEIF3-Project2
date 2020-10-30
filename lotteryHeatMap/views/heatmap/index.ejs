@@ -41,8 +41,9 @@
     </section>
 
     <div class="container">
+        <div class="mb-5"></div>
 
-        <ul class="nav mt-sm-5">
+        <ul class="nav mt-sm-5 mb-5">
             <li class="nav-item">
                 <a class="nav-link active" href="/">Home</a>
             </li>
@@ -69,58 +70,44 @@
 
 
         <div class="container mb-4">
-            <div class="col-12 mt-5">
-                <div class="row">
-                    <label class="col-2 text-left" for="rating">Prize Category</label>
-
-                    <label class="col-4 text-left" for="4numbers">Search Numbers</label>
-
-                    <label class="col-3 text-left" for="occurance">Appeared most at</label>
-
-                    <label class="col-3 text-left" for="paidout">Paid out most at</label>
-                </div>
-            </div>
-
-
-
 
             <div class="form-group row">
 
-                <div class="col-6">
-                    <div class="row">
-                        <select class="form-control col-4" id="Prize" name="prize">
-                            <option value="">All Prize</option>
-                            <option value="3000">1st Prize</option>
-                            <option value="2000">2nd Prize</option>
-                            <option value="1000">3rd Prize</option>
-                        </select>
-
-                        <div class="input-group col-8">
+                <div class="col-md-6">
+                    <div class="row form-warpper">
+                        <div class="col-sm-4">
+                            <label class="label-control" for="rating">Prize Category</label>
+                            <select class="form-control" id="Prize" name="prize">
+                                <option value="">All Prize</option>
+                                <option value="3000">1st Prize</option>
+                                <option value="2000">2nd Prize</option>
+                                <option value="1000">3rd Prize</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="label-control" for="4numbers">Search Numbers</label>
                             <input id="queryNum" type="text" class="form-control" placeholder="0000 to 9999"
                                 aria-label="Text input with segmented dropdown button">
-                            <div class="input-group-append">
-                                <button onclick="queryNum()" type="button"
-                                    class="btn btn-outline-secondary">Submit</button>
-                                <!-- <button type="button"
-                                    class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button> -->
-                                <!-- <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Select All Numbers</a>
-                                    <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div> -->
-                            </div>
+                        </div>
+                        <div class="col-sm-4 button-wrap">
+                            <label class="label-control">&nbsp;</label>
+                            <button onclick="queryNum()" type="button" class="btn btn-outline-primary">Submit</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-md-6">
                     <div class="row">
-                        <div class="col-6" id="xLocation"></div>
-                        <div class="col-6" id="paidLocation"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <label class="label-control" for="occurance">Appeared most at</label>
+                            <div id="xLocation"></div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <label class="label-control" for="paidout">Paid out most at</label>
+                            <div id="paidLocation"></div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
@@ -130,7 +117,9 @@
 
     </div>
     <p id="defaultData" style="display: none"><%=data %></p>
-    <div id="map"></div>
+    <div class="container">
+        <div id="map"></div>
+    </div>
 
 
 

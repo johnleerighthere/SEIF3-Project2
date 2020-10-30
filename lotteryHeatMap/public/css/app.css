@@ -24,53 +24,6 @@
         border-radius: 45px;
       }
 
-       /* Extra small devices (portrait phones, less than 576px)
-       No media query since this is the default in Bootstrap */
-      
-       /* Small devices (landscape phones, 576px and up) */
-    
-      @media (min-width: 576px) { 
-      
-       }
-      
-       /* Medium devices (tablets, 768px and up) */
-      @media (max-width: 768px) { 
-        #map {
-        height: 50%;
-        width: 75%;
-        margin: auto;} 
-      #signInContainer{
-        width: 75%;
-      }
-      }
-      
-       /* Large devices (desktops, 992px and up) */
-      @media (max-width: 992px) { 
-        #signInContainer{
-          width: 25%;
-        }
-        #signUp{
-          width: 25%;
-        }
-       }
-      
-       /* Extra large devices (large desktops, 1200px and up) */
-      @media (min-width: 1200px) { 
-        #signInContainer{
-          width: 25%;
-        }
-        #signUp{
-          width: 25%;
-        }
-       }
-
-  /* @media only screen and (max-width: 768px) {
-    #map {
-      height: 50%;
-      width: 77%;
-      margin: auto;
-  }
-  } */
 
   /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -104,62 +57,19 @@
         font-size: 16px;
     }
 
-    label {
+    /* label {
         font-weight: bold;
         text-align: center;
+    } */
+
+    #map {
+      height: 50vh;
+      width: 100%;
     }
 
-
-
-    /* Extra small devices (portrait phones, less than 576px)
-   No media query since this is the default in Bootstrap */
-
-    /* Small devices (landscape phones, 576px and up) */
-
-    @media (min-width: 576px) {}
-
-    /* Medium devices (tablets, 768px and up) */
-    @media (max-width: 768px) {
-        #map {
-            height: 50%;
-            width: 75%;
-            margin: auto;
-        }
-
-        #signInContainer {
-            width: 75%;
-        }
-    }
-
-    /* Large devices (desktops, 992px and up) */
-    @media (max-width: 992px) {
-        #signInContainer {
-            width: 25%;
-        }
-
-        #signUp {
-            width: 25%;
-        }
-    }
-
-    /* Extra large devices (large desktops, 1200px and up) */
-    @media (min-width: 1200px) {
-        #signInContainer {
-            width: 25%;
-        }
-
-        #signUp {
-            width: 25%;
-        }
-    }
-
-    /* @media only screen and (max-width: 768px) {
-#map {
-  height: 50%;
-  width: 77%;
-  margin: auto;
-}
-} */
+  #signInContainer,#signUp {
+      max-width: 350px;
+  }
 
 
     @media(max-width:1199px) {
@@ -171,53 +81,24 @@
         }
     }
 
-    @media(max-width:991px) {
-        label {
-            font-weight: bold;
-            text-align: center;
-            font-size: 12px;
-        }
+
+    .form-warpper label{
+      width:100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
-
-    @media(max-width:767px) {
-
-        .nav-item.ml-auto {
-            margin-left: 0 !important;
-        }
-
-        .nav.mt-sm-5 {
-            justify-content: center;
-        }
-
-    }
-
-    @media(max-width:414px) {
-
-        .input-group.col-md-8 {
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .form-group.row.input-form .col-md-12 .row {
-            display: block;
-            margin: 0;
-        }
-
-        .container.all-labels label {
-            width: 100%;
-            display: block;
-            max-width: 100%;
-            flex: unset;
-        }
-
-        a.nav-link {
-            font-size: 13px;
-            padding: 0 6px;
-        }
-
-        #map {
-            height: auto;
-            width: 100%;
-            margin: auto;
-        }
+    @media(max-width:576px){
+      .form-warpper .form-control{
+        margin-bottom: 10px;
+      }
+      .form-warpper label{
+        margin-bottom:0;
+      }
+      .button-wrap label{
+        display:none;
+      }
+      .button-wrap .btn{
+        float:right;
+      }
     }
