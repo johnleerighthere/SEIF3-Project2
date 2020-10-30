@@ -15,8 +15,6 @@ function getUserLocation() {
     var lat = place.geometry.location.lat(),
         lng = place.geometry.location.lng();
 
-    // Then do whatever you want with them
-
     console.log(lat);
     console.log(lng);
     document.getElementById("lat").value = lat
@@ -65,6 +63,7 @@ function editdata(...data) {
     document.getElementById("uploadForm").setAttribute("action", "/users/editUpload");
     document.getElementById("addObj").value = data[7];
     console.log(data);
+    checkmodelType('edit');
 
     // we have to change the the form url as welll
 
@@ -98,17 +97,21 @@ function validateForm() {
         alert("Wah lao, spend so much money on 4D, you got priotization issue or too much money izzit?")
         return false;
     }
-    /*
-        else if (!image) {
-            alert("Please select image")
-            return false;
-        }
-        */
+    //this will only run if we have open the model from add new button (fake detector)
+    else if (document.getElementById("modelType").value === 'add' && !image) {
+        alert("Please select image")
+        return false;
+    }
+
+}
+// type is add or edit depending on which button the user clicks
+function checkmodelType(type) {
+    document.getElementById("modelType").value = type;
 }
 
 function changeImage(event) {
 
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     const imagele = document.getElementById("editImage")
     //URL.createObjectURL creates url from fileobject
     imagele.setAttribute("src", URL.createObjectURL(event.target.files[0]));

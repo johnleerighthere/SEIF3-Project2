@@ -58,10 +58,29 @@ const controllers = {
         })
     },
 
+
+
+
+    /**
+     * function data(req,res)
+     * {
+     * /// have a particular use inside the function 
+     * 
+     * }
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
+
     login: (req, res) => {
         userModel.findOne({
             email: req.body.email
         })
+
             .then(result => {
                 console.log(result);
                 // check if result is empty, if it is, no user, so login fail, redirect to login page
@@ -154,14 +173,11 @@ const controllers = {
     uploadData: (req, res) => {
 
         console.log("req.files", req.files);
-        // const file = req.files.image.size
-
-        // if (file = 0) {
-        //     console.log("no file")
-        // }
-
+        //files should in req.files if we are using multipart method
         const filename = req.files.image.path; //this path should be uploaded to cloudinary;
         console.log(req.body);// save it into the database
+
+        //all the keys of the body have been parse into variable data
         let data = req.body;
 
         //with the help of config, uploads my image into cloudinary cloud
@@ -174,24 +190,13 @@ const controllers = {
                 data.picture = result.url
                 data.locationText = data.location
 
-                ///
                 // console.log(req.session);
                 data.username = req.session.user.email;
-                // console.log("Datata Username", data.username);
 
-
-                // geocoder.geocode(data.location, function (err, latlong) {
-                //     if (err) { console.log(err); res.redirect("/users/upload"); }
-
-                //     const lat = latlong[0].latitude;
-                //     const long = latlong[0].longitude;
-                //     data.location = [lat, long];
-
-
-
-                // })
                 //creating a new ticket with lat and long and locationObj
                 //locationObj contains the whole obj regarding the place, to access Obj.url etc
+                console.log(data.addObj)
+                console.log(typeof data.addObj)
                 const winningsmodel = new winningsModel({
                     ...data,
                     lat: Number(data["lat"]),
@@ -271,6 +276,9 @@ const controllers = {
 
 
                         console.log("final Data when file is uploaded", data);
+                        //updateOne can have up to 3 params, 1st{ _id: data.id } is the document/record identifier,
+                        //2nd is what i have to update, 3rd one is used for upsert true/false suppose 
+                        //the winning model didn't find any data, it will create a new row(data i have passed in the second param)
 
                         winningsModel.updateOne({ _id: data.id }, {
                             $set: {
@@ -281,7 +289,6 @@ const controllers = {
                                 locationText: data.locationText,
                                 locationObj: JSON.parse(data.addObj),
                                 totalAmount: data.totalAmount,
-                                location: data.location,
                                 picture: data.picture
 
 
@@ -360,7 +367,7 @@ const controllers = {
                 res.redirect('/')
             })
     },
-
+    //response
     searchNumber: async (req, res) => {
 
         console.log("hhuu", req.body)
@@ -369,6 +376,8 @@ const controllers = {
             obj[x] = Number(req.body[x])
         })
 
+        console.log("Oje", obj);
+
 
         // some logic and you are getting a variable -> KEYNAME
         // let obj = {
@@ -376,7 +385,7 @@ const controllers = {
         // }
 
         // obj. or obj["value"]
-
+        ///mysql group by  --->aggreagation
         const total = winningsModel.aggregate([
             {
                 "$match": obj
@@ -423,6 +432,10 @@ const controllers = {
                 }
             }
         ])
+        /**
+         * const a= await total(); 2.5 seconds
+         * const b =await count();/ 2.5 seconds 
+;         */
         const alldata = await Promise.all([total, count]);
         // console.log(alldata[0]); // alldata[0] is being sorted by total in descending order 
         // alldata[1] is being sorted by count in descending order
