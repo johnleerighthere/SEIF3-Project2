@@ -7,7 +7,7 @@
 
 Express JS, Mongoose, NodeJS, HTML, CSS, Javascript
 
-**What the app does: **
+**What the app does**:
 
 The website shows the heat map for total payout for all prizes, giving an idea of where is the luckiest or 
 not so lucky place to buylottery depending on how the user interprets the information.
